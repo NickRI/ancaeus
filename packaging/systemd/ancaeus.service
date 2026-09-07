@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/ancaeus --listen 127.0.0.1:1223 --provider beacondb
+ExecStart=/usr/local/bin/ancaeus --listen 127.0.0.1:7609 --provider beacondb
 # Google: --provider google --google-geo-token-file /etc/ancaeus/google-geo.token
 # Self-hosted beaconDB: --beacondb-url http://127.0.0.1:8080/v1/geolocate
 CacheDirectory=ancaeus

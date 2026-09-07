@@ -36,7 +36,7 @@ in
 
     listenAddress = lib.mkOption {
       type = lib.types.str;
-      default = "127.0.0.1:1223";
+      default = "127.0.0.1:7609";
       description = "Listen address for the HTTP API (keep on localhost).";
     };
 

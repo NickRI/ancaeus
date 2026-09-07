@@ -20,7 +20,7 @@ var (
 	cachePath          = flag.String("cache-path", "/var/cache/ancaeus/ancaeus_cache.db", "BSSID/wifi cache DB path")
 	wifiCacheTTL       = flag.Duration("wifi-cache-ttl", 5*time.Minute, "WiFi get cache TTL")
 	lookupCacheTTL     = flag.Duration("lookup-cache-ttl", 6*time.Hour, "Lookup cache TTL")
-	listenAddress      = flag.String("listen", "127.0.0.1:1223", "Listen address")
+	listenAddress      = flag.String("listen", "127.0.0.1:7609", "Listen address")
 	provider           = flag.String("provider", "beacondb", "Geolocation provider: beacondb|google|apple")
 	beaconDBURL        = flag.String("beacondb-url", internal.DefaultBeaconDBURL, "BeaconDB geolocate URL")
 	googleGeoTokenFile = flag.String("google-geo-token-file", "", "File with Google Geolocation API key (required for -provider=google)")

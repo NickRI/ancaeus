@@ -25,7 +25,7 @@ Named after **Ancaeus**, navigator of the Argo: it scans nearby Wi‑Fi, resolve
 
 Default provider is **[beaconDB](https://beacondb.net/)** (MLS-compatible). Google Geolocation API is optional. Coverage depends on the provider — for beaconDB you can improve your area with [NeoStumbler](https://github.com/mjaakko/NeoStumbler).
 
-Endpoints (default `127.0.0.1:1223`):
+Endpoints (default `127.0.0.1:7609`):
 
 - `POST /geolocate` — Google/GeoClue-compatible location response
 - `GET /time-zone` — IANA timezone string
@@ -56,6 +56,11 @@ Endpoints (default `127.0.0.1:1223`):
 
 Experimental: overrides `navigator.geolocation` and talks to local Ancaeus.
 
+**Manual install from release** (unpacked zip → Chromium “Load unpacked”, URL is already `http://127.0.0.1:7609/geolocate`):
+
+1. Download [`ancaeus-chromium-extension.zip`](https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-chromium-extension.zip)
+2. Unzip and load the folder in `chrome://extensions` (Developer mode → Load unpacked)
+
 **NixOS + home-manager** (HM as a NixOS module — `osConfig` is the system config):
 
 ```nix
@@ -68,14 +73,14 @@ Experimental: overrides `navigator.geolocation` and talks to local Ancaeus.
 }
 ```
 
-**Standalone home-manager** (no `osConfig`): build the CRX yourself. The Ancaeus **daemon** must still run on the host (NixOS module or `packaging/` systemd units) — HM alone cannot replace Wi‑Fi scan + capabilities.
+**Home Manager without NixOS** (`osConfig` unavailable): install Ancaeus on the host first ([Downloads](#downloads) / systemd packing), then either load the [release extension zip](https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-chromium-extension.zip) unpacked, or declare a CRX from the flake:
 
 ```nix
-# home.nix
+# home.nix — flake input `ancaeus` required
 { pkgs, inputs, ... }:
 let
   ext = pkgs.callPackage "${inputs.ancaeus}/chromium-extension" {
-    serverUrl = "http://127.0.0.1:1223/geolocate";
+    serverUrl = "http://127.0.0.1:7609/geolocate";
   };
 in
 {
@@ -103,7 +108,7 @@ Two options (Ancaeus must be running):
 
    In `about:config` set:
 
-   - `geo.provider.network.url` → `http://127.0.0.1:1223/geolocate`
+   - `geo.provider.network.url` → `http://127.0.0.1:7609/geolocate`
 
    (Use your `listenAddress` if it differs.)
 
@@ -160,7 +165,7 @@ Needs network access for the geolocation provider, and permission to query Wi‑
 | `services.ancaeus.provider` | `beacondb` | `beacondb` \| `google` |
 | `services.ancaeus.beaconDBUrl` | beaconDB public API | MLS geolocate URL (self-host OK) |
 | `services.ancaeus.googleGeoTokenFile` | `null` | Google API key file (required for `google`) |
-| `services.ancaeus.listenAddress` | `127.0.0.1:1223` | HTTP listen |
+| `services.ancaeus.listenAddress` | `127.0.0.1:7609` | HTTP listen |
 | `services.ancaeus.geoclue.enable` | `true` | Wire GeoClue2 provider URL |
 | `services.ancaeus.timezone.enable` | `true` | Wi-Fi-up timezone updates |
 | `services.ancaeus.chromiumExtension` | set when enabled | `{ id, crxPath, version }` for Chromium |

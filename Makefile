@@ -2,7 +2,7 @@
 
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo 0.1.0)
 DIST ?= dist
-SERVER_URL ?= http://127.0.0.1:1223/geolocate
+SERVER_URL ?= http://127.0.0.1:7609/geolocate
 EXT_VERSION ?= 1.1
 
 build:
