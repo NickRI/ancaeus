@@ -1,0 +1,5 @@
+/vendor/
+/dist/
+/result
+/result-*
+*.crx

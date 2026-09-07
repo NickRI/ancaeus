@@ -1,0 +1,7 @@
+#!/bin/sh
+# Install to: /etc/NetworkManager/dispatcher.d/10-ancaeus-wifi-up
+# Requires: executable bit (chmod +x)
+
+if [ "$2" = "up" ]; then
+  systemctl try-restart ancaeus-timezone-update.service
+fi

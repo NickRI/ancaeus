@@ -1,0 +1,13 @@
+[Unit]
+Description=Ancaeus timezone update
+Requires=ancaeus.service
+After=ancaeus.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+TimeoutStartSec=120
+ExecStart=/bin/bash -c 'for i in $(seq 1 60); do if zone="$(curl -fsS --max-time 5 http://127.0.0.1:1223/time-zone)"; then if [ -n "$zone" ]; then timedatectl set-timezone "$zone"; exit 0; fi; fi; sleep 2; done; echo timeout >&2; exit 1'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Ancaeus Geolocation",
+  "version": "__VERSION__",
+  "permissions": ["scripting", "activeTab", "geolocation"],
+  "host_permissions": ["__SERVER_URL__"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
