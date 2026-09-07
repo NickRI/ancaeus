@@ -1,21 +1,26 @@
 <div align="center">
 
-  <img src="logo.png" alt="Ancaeus" height="120">
+  <img src="logo.png" alt="Ancaeus" height="220">
   <h1>Ancaeus</h1>
   
   <p>
     <strong>Wi-Fi geolocation and timezone helper for Linux</strong>
   </p>
 
-  <hr/>
-
   <h3>
     <a href="#nixos-flake">NixOS</a>
     <span> | </span>
     <a href="#other-linux-systemd">Other Linux</a>
     <span> | </span>
+    <a href="#downloads">Downloads</a>
+    <span> | </span>
     <a href="#options-nixos">Options</a>
   </h3>
+
+  <p>
+    <a href="https://github.com/NickRI/ancaeus/releases/latest"><img src="https://img.shields.io/github/v/release/NickRI/ancaeus?label=latest%20release" alt="Latest release"></a>
+    <a href="https://github.com/NickRI/ancaeus"><img src="https://img.shields.io/badge/GitHub-NickRI%2Fancaeus-black" alt="GitHub"></a>
+  </p>
 
 </div>
 
@@ -114,17 +119,30 @@ Two options (Ancaeus must be running):
 
 Do not point Firefox at beaconDB directly if you want Wi‑Fi scan enrichment — the browser cannot list BSSIDs; Ancaeus (or GeoClue→Ancaeus) does that locally.
 
+## Downloads
+
+Latest binaries and packs: **[GitHub Releases](https://github.com/NickRI/ancaeus/releases/latest)**
+
+| Asset | Download |
+|-------|----------|
+| Linux amd64 binary | [`ancaeus-linux-amd64.tar.gz`](https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-linux-amd64.tar.gz) |
+| systemd / NetworkManager / GeoClue packing | [`ancaeus-packaging.zip`](https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-packaging.zip) |
+| Chromium extension (unpacked, localhost URL) | [`ancaeus-chromium-extension.zip`](https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-chromium-extension.zip) |
+
+```sh
+# example: artifacts from latest release
+curl -fsSL -o ancaeus-linux-amd64.tar.gz \
+  https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-linux-amd64.tar.gz
+curl -fsSL -o ancaeus-packaging.zip \
+  https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-packaging.zip
+curl -fsSL -o ancaeus-chromium-extension.zip \
+  https://github.com/NickRI/ancaeus/releases/latest/download/ancaeus-chromium-extension.zip
+tar -xzf ancaeus-linux-amd64.tar.gz   # → ./ancaeus
+```
+
 ## Other Linux (systemd)
 
-Release assets (tag a GitHub release):
-
-| File | Contents |
-|------|----------|
-| `ancaeus` / `ancaeus-linux-amd64.tar.gz` | Binary |
-| `ancaeus-packaging.zip` | systemd units, NetworkManager hook, GeoClue snippet |
-| `ancaeus-chromium-extension.zip` | Unpacked extension (URL baked to `http://127.0.0.1:1223/geolocate`) |
-
-Minimal install:
+Use the [Downloads](#downloads) assets, then:
 
 ```sh
 sudo install -m755 ancaeus /usr/local/bin/ancaeus
