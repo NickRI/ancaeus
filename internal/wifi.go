@@ -158,6 +158,27 @@ func mergeAP(dst map[string]AccessPoint, ap AccessPoint) {
 	dst[mac] = ap
 }
 
+func dumpAccessPoints(c *wifi.Client, iface *wifi.Interface, byMAC map[string]AccessPoint) error {
+	infos, err := c.AccessPoints(iface)
+	if err != nil {
+		return err
+	}
+	signals := stationSignals(c, iface)
+	for _, info := range infos {
+		if info.BSSID == nil {
+			continue
+		}
+		mac := strings.ToLower(info.BSSID.String())
+		mergeAP(byMAC, AccessPoint{
+			Name:           info.SSID,
+			MacAddress:     mac,
+			InUse:          wifiInUse(info.Status),
+			SignalStrength: signals[mac],
+		})
+	}
+	return nil
+}
+
 func GetWifiInfo(ctx context.Context) ([]AccessPoint, error) {
 	c, err := wifi.New()
 	if err != nil {
@@ -177,6 +198,7 @@ func GetWifiInfo(ctx context.Context) ([]AccessPoint, error) {
 			continue
 		}
 		hlog := slog.With("iface", iface.Name)
+		before := len(byMAC)
 
 		if bss, err := c.BSS(iface); err == nil && bss.BSSID != nil && wifiInUse(bss.Status) {
 			hlog.Info("associated bss", "ssid", bss.SSID)
@@ -195,30 +217,21 @@ func GetWifiInfo(ctx context.Context) ([]AccessPoint, error) {
 			})
 		}
 
+		if err := dumpAccessPoints(c, iface, byMAC); err != nil {
+			hlog.Warn("access points failed", "err", err)
+		}
+
+		if len(byMAC) > before {
+			continue
+		}
+
 		hlog.Info("wifi scan")
 		if err := c.Scan(ctx, iface); err != nil {
 			hlog.Warn("scan failed", "err", err)
 			continue
 		}
-
-		infos, err := c.AccessPoints(iface)
-		if err != nil {
+		if err := dumpAccessPoints(c, iface, byMAC); err != nil {
 			hlog.Warn("access points failed", "err", err)
-			continue
-		}
-
-		signals := stationSignals(c, iface)
-		for _, info := range infos {
-			if info.BSSID == nil {
-				continue
-			}
-			mac := strings.ToLower(info.BSSID.String())
-			mergeAP(byMAC, AccessPoint{
-				Name:           info.SSID,
-				MacAddress:     mac,
-				InUse:          wifiInUse(info.Status),
-				SignalStrength: signals[mac],
-			})
 		}
 	}
 
