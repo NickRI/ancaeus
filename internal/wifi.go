@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"maps"
+	"slices"
 	"sort"
 	"strings"
 
@@ -207,6 +209,8 @@ func GetWifiInfo(ctx context.Context) ([]AccessPoint, error) {
 				MacAddress: bss.BSSID.String(),
 				InUse:      true,
 			})
+
+			return slices.Collect(maps.Values(byMAC)), nil
 		}
 
 		for mac, signal := range stationSignals(c, iface) {
