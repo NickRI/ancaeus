@@ -4,3 +4,5 @@
 /result-*
 *.crx
 .idea
+*.db
+ancaeus_cache.db
