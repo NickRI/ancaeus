@@ -6,7 +6,7 @@ pkgs.buildGoModule {
 
   src = ./.;
 
-  subPackages = [ "./cmd/ancaeus" ];
+  subPackages = [ "cmd/ancaeus" ];
 
   vendorHash = "sha256-hK6Yv/uP32jLrBTaX38BLZ55TRzD3HeA8wB5/Z67EL0=";
 
