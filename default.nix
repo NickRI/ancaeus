@@ -6,7 +6,9 @@ pkgs.buildGoModule {
 
   src = ./.;
 
-  vendorHash = "sha256-7blwUQgdziPnRdwfv7gkKh8VjSdAaRrS+QXL12WSYDA=";
+  subPackages = [ "./cmd/ancaeus" ];
+
+  vendorHash = "sha256-rsoFI/tKBrJdbA7uA1blhXjwtERRqbCSEUeZcbvsv4k=";
 
   meta = with pkgs.lib; {
     description = "Wi-Fi geolocation and timezone helper for GeoClue and browsers";

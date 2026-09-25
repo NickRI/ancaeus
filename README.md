@@ -191,7 +191,7 @@ Needs network access for the geolocation provider, and permission to query Wi‑
 ## Develop
 
 ```sh
-go build -o ancaeus .
+go build -o ancaeus ./cmd/ancaeus
 make release-artifacts
 nix build
 ```

@@ -7,7 +7,7 @@ EXT_VERSION ?= 1.1
 
 build:
 	mkdir -p $(DIST)
-	CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(DIST)/ancaeus .
+	CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o $(DIST)/ancaeus ./cmd/ancaeus
 
 release-artifacts: build
 	mkdir -p $(DIST)/packaging $(DIST)/chromium-extension
